@@ -454,6 +454,8 @@ namespace Vocaluxe.Screens
 
         public override bool Draw()
         {
+            
+            
             if (_Active)
             {
                 CTexture background;
@@ -534,6 +536,8 @@ namespace Vocaluxe.Screens
                     slide.Draw();
             }
 
+            PointsPercentage.Instance.Draw();
+
             return true;
         }
 
@@ -599,7 +603,7 @@ namespace Vocaluxe.Screens
                 CLog.LogError("Critical Error! ScreenSing.LoadNextSong() song is null!");
                 return;
             }
-
+            PointsPercentage.Instance.updateSong(song);
             string songname = song.Artist + " - " + song.Title;
             int rounds = CGame.GetNumSongs();
             if (rounds > 1)

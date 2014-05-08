@@ -143,27 +143,6 @@
     <DefineConstants>WIN;ARCH_X64;INSTALLER</DefineConstants>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Platform)' == 'x86' And ('$(Configuration)' == 'DebugWin' Or '$(Configuration)' == 'ReleaseWin' Or '$(Configuration)' == 'InstallerWin')">
-    <Reference Include="SlimDX">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Output\x86\SlimDX.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\Output\x86\System.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Platform)' == 'x64' And ('$(Configuration)' == 'DebugWin' Or '$(Configuration)' == 'ReleaseWin' Or '$(Configuration)' == 'InstallerWin')">
-    <Reference Include="SlimDX">
-      <HintPath>..\Output\x64\SlimDX.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\Output\x64\System.Data.SQLite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="AForge.Video, Version=2.2.4.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -186,6 +165,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Output\gstreamer-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>C:\Program Files (x86)\Mono-3.2.3\lib\mono\gac\Mono.Data.Sqlite\4.0.0.0__0738eb9f132ed756\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Output\Newtonsoft.Json.dll</HintPath>
@@ -203,14 +185,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Output\QRCoder.dll</HintPath>
     </Reference>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>C:\Program Files (x86)\System.Data.SQLite\2013\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.92.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\System.Data.SQLite\2010\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddoN\PointsPercentage.cs" />
     <Compile Include="Base\CBackgroundMusic.cs" />
     <Compile Include="Lib\Sound\CBuffer.cs" />
     <Compile Include="Base\CConfig.cs" />
@@ -453,8 +444,18 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client,KB2468871">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 und x64%29 und Update für .NET Framework 4 %28KB2468871%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29 and Update for .NET Framework 4 %28KB2468871%29</ProductName>
       <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>

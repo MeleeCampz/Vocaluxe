@@ -239,6 +239,8 @@ namespace Vocaluxe.Base
 
                     CSongLine[] lines = song.Notes.GetVoice(Players[p].VoiceNr).Lines;
                     int line = song.Notes.GetVoice(Players[p].VoiceNr).FindPreviousLine(beat);
+                    PointsPercentage.Instance.updateLine(lines[line]);                    
+                    
                     if (line < 0 || lines[line].EndBeat < beat)
                         continue;
 
@@ -293,11 +295,14 @@ namespace Vocaluxe.Base
                             //CSound.RecordSetTone(p, Tone);
                             double points = (CSettings.MaxScore - CSettings.LinebonusScore) * (double)notes[note].PointsForBeat /
                                             song.Notes.GetVoice(Players[p].VoiceNr).Points;
+
+                            double pointsForBeat = (double)notes[note].PointsForBeat;
+                            
                             if (notes[note].Type == ENoteType.Golden)
                                 Players[p].PointsGoldenNotes += points;
 
                             Players[p].Points += points;
-
+                            PointsPercentage.Instance.addPoints(p, pointsForBeat);
                             // update player notes (sung notes)
                             if (Players[p].SungLines[line].NoteCount > 0)
                             {
