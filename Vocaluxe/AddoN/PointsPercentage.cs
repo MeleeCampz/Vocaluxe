@@ -14,25 +14,21 @@ class PointsPercentage
     private static PointsPercentage instance;
 
     private int playerNum;
-    private CSongLine curLine;
+    private CSongNote curNote;
+    //private CSongLine curLine;
     private CSong song;
-    private double minPercentage = 0.5;
+    private double waterLevel;
+    private double pointsToShower;
 
-    private string fmt;
-    private string fmt2;
-
-    private double minTime = 5.0;
-
-    private int curPage;
-    private int pages;
-
-    private string txt;
     SColorF gray;
+    SColorF blue;
     int y;
 
     private double[] currentPlayerPoints;
-    private double maxPointsCurrentLine;
-    private double currentPointsPercentage;
+    //private double maxPointsCurrentLine;
+    private double maxPointsCurrentNote;
+    private double maxPointsSong;
+    //private double currentPointsPercentage;
     private PointsPercentage()
     {
         playerNum = CConfig.NumPlayer;
@@ -42,19 +38,13 @@ class PointsPercentage
         {
             currentPlayerPoints[i] = 0;
         }
-        maxPointsCurrentLine = 0;
-        curLine = null;
-        txt = "";
+        maxPointsCurrentNote = 0;
+        pointsToShower = 75;
+        waterLevel = 0;
+        curNote = null;
         gray = new SColorF(1f, 1f, 1f, 0.5f);
+        blue = new SColorF(0f, 0f, 1f, 0.7f);
         y = 100;
-        currentPointsPercentage = 0;
-        fmt = "000.##";
-        fmt2 = "00.##";
-        //formatString = " {0,15:" + fmt + "}";
-        //formatString2 = " {0,15:" + fmt2 + "}";
-
-        curPage = 0;
-        pages = 0;
 
     }
     public static PointsPercentage Instance
@@ -72,75 +62,57 @@ class PointsPercentage
 
     }
 
+    public void updateNote(CSongNote note)
+    {
+        if (curNote != note)
+        {
+            noteEnded();
+            curNote = note;
+            maxPointsCurrentNote = note.Points;
+        }
+    }
+
+    private void noteEnded()
+    {
+        waterLevel += maxPointsCurrentNote - currentPlayerPoints[0];
+        currentPlayerPoints[0] = 0;
+
+        if (waterLevel >= pointsToShower)
+        {
+            showerHim();
+            waterLevel = 0;
+        }
+    }
+
+    public void updateTime(float time)
+    {
+       //
+    }
+
     public void addPoints(int player, double points)
     {
         currentPlayerPoints[player] += points;
-
-        currentPointsPercentage = currentPlayerPoints[player] / maxPointsCurrentLine;
-        // Draw();
-    }
-
-    public void updateLine(CSongLine line)
-    {
-        if (curLine != line)
-        {
-            curPage++;
-            curLine = line;
-            if (curPage > pages)
-            {
-                showerHim();
-                for (int i = 0; i < playerNum; i++)
-                {
-                    currentPlayerPoints[i] = 0;
-                }
-                maxPointsCurrentLine = 0;
-                pages = 0;
-                curPage = 1;
-                float time = 0.0f;
-                bool lastLine = false;
-                CSongLine cline = line;
-                int lineNumb = song.Notes.GetVoice(0).FindPreviousLine(cline.StartBeat);
-                while (lastLine == false && time < minTime)
-                {
-                    cline = song.Notes.GetVoice(0).Lines[lineNumb];
-                    pages++;
-                    time += CGame.GetTimeFromBeats(cline.EndBeat, song.BPM) - CGame.GetTimeFromBeats(cline.StartBeat, song.BPM);
-                    maxPointsCurrentLine += song.Notes.GetVoice(0).Lines[lineNumb].Points;
-                    lineNumb++;
-                    if( lineNumb >= song.Notes.GetVoice(0).Lines.Length -1)
-                    {
-                        lastLine = true;
-                    }
-                }
-                CGame.GetTimeFromBeats(line.StartBeat, song.BPM);
-            }
-        }
     }
 
     public void updateSong(CSong song_)
     {
         song = song_;
+        maxPointsSong = song.Notes.GetVoice(0).Points;
+         
     }
     private void showerHim()
     {
-        for (int i = 0; i < playerNum; i++)
-        {
-            if (currentPointsPercentage < minPercentage)
-            {
-                //txt = "Player " + i.ToString() + " failed!";
-                //Console.WriteLine("Player " + i.ToString() + " failed!");
-            }
-        }
+        //phidget stuff here!
     }
 
     public void Draw()
     {
-        txt = "Points: " + (currentPointsPercentage * 100).ToString(fmt) + "%";
-        txt += "   Page " + curPage.ToString(fmt2) + "/"+pages.ToString(fmt2);
 
-        RectangleF rect = new RectangleF(CSettings.RenderW - CFonts.GetTextWidth(txt), y, CFonts.GetTextWidth(txt), CFonts.GetTextHeight(txt));
-        CDraw.DrawColor(gray, new SRectF(rect.X, rect.Top, rect.Width, rect.Height, CSettings.ZNear));
-        CFonts.DrawText(txt, rect.X, rect.Y, CSettings.ZNear);
+        RectangleF rectWhite = new RectangleF(CSettings.RenderW - 500, y, 500, 100);
+        RectangleF rectBlue = new RectangleF(CSettings.RenderW - (int)(500 * (waterLevel / pointsToShower)), y, 500, 100);
+
+        CDraw.DrawColor(gray, new SRectF(rectWhite.X, rectWhite.Top, rectWhite.Width, rectWhite.Height, CSettings.ZNear));
+        CDraw.DrawColor(blue, new SRectF(rectBlue.X, rectBlue.Top, rectBlue.Width, rectBlue.Height, CSettings.ZNear));        
     }
 }
 

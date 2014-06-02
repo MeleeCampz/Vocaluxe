@@ -208,6 +208,8 @@ namespace Vocaluxe.Base
 
         public static void UpdatePoints(float time)
         {
+            PointsPercentage.Instance.updateTime(time);
+            
             const bool DEBUG_HIT = false;
 
             CSong song = _SongQueue.GetSong();
@@ -239,7 +241,7 @@ namespace Vocaluxe.Base
 
                     CSongLine[] lines = song.Notes.GetVoice(Players[p].VoiceNr).Lines;
                     int line = song.Notes.GetVoice(Players[p].VoiceNr).FindPreviousLine(beat);
-                    PointsPercentage.Instance.updateLine(lines[line]);                    
+                    //PointsPercentage.Instance.updateLine(lines[line]);                    
                     
                     if (line < 0 || lines[line].EndBeat < beat)
                         continue;
@@ -268,6 +270,8 @@ namespace Vocaluxe.Base
                         continue;
 
                     Players[p].CurrentNote = note;
+
+                    PointsPercentage.Instance.updateNote(notes[note]);
 
                     if (line == lines.Length - 1 && beat == lines[line].LastNoteBeat)
                         Players[p].SongFinished = true;
