@@ -181,6 +181,10 @@
     <Reference Include="OpenTK.GLControl">
       <HintPath>..\Output\OpenTK.GLControl.dll</HintPath>
     </Reference>
+    <Reference Include="Phidget21.NET, Version=2.1.8.185, Culture=neutral, PublicKeyToken=c2b1f2a3594bce52, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Phidgets\Phidget21.NET.dll</HintPath>
+    </Reference>
     <Reference Include="QRCoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Output\QRCoder.dll</HintPath>
@@ -201,6 +205,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddoN\PhidgetsController.cs" />
     <Compile Include="AddoN\PointsPercentage.cs" />
     <Compile Include="Base\CBackgroundMusic.cs" />
     <Compile Include="Lib\Sound\CBuffer.cs" />

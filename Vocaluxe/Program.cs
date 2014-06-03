@@ -237,6 +237,8 @@ namespace Vocaluxe
             _SplashScreen.Close();
             CVocaluxeServer.Start();
 
+            PhidgetsController.Instance.Init();
+
             CDraw.MainLoop();
         }
 
@@ -245,6 +247,9 @@ namespace Vocaluxe
             // Unloading
             try
             {
+
+                PhidgetsController.Instance.Cleanup();
+
                 CVocaluxeServer.Close();
                 CController.Close();
                 CSound.RecordCloseAll();

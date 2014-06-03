@@ -209,6 +209,8 @@ namespace Vocaluxe.Base
         public static void UpdatePoints(float time)
         {
             PointsPercentage.Instance.updateTime(time);
+
+            PhidgetsController.Instance.Update(time);
             
             const bool DEBUG_HIT = false;
 

@@ -103,6 +103,7 @@ class PointsPercentage
     private void showerHim()
     {
         //phidget stuff here!
+        PhidgetsController.Instance.StartShower();
     }
 
     public void Draw()
