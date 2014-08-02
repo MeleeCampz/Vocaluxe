@@ -31,7 +31,7 @@ class PhidgetsController
     {
         interfaceKit_ = new InterfaceKit();
         interfaceKit_.open();
-        interfaceKit_.waitForAttachment();
+        //interfaceKit_.waitForAttachment();
 
         state_ = State.idle;
     }
@@ -52,7 +52,7 @@ class PhidgetsController
 
     public void Update(float time)
     {
-        if (interfaceKit_.Attached)
+        /*if (interfaceKit_.Attached)
         {
             float deltaTime = time - lastTime_;
             timeCount_ += deltaTime;
@@ -102,7 +102,7 @@ class PhidgetsController
         {
             interfaceKit_.waitForAttachment();
         }
-        lastTime_ = time;
+        lastTime_ = time;*/
     }
 
     public void StartShower()
